@@ -3,8 +3,12 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+  build:
     commands:
-      - aws cloudformation package --template-file template.yaml --s3-bucket serverless-cicd-helloworld --output-template-file outputTemplate.yaml
+      - sam build
+  post_build:
+    commands:
+      - sam package --output-template-file outputTemplate.yaml --s3-bucket serverless-cicd-helloworld
 artifacts:
   type: zip
   files:
